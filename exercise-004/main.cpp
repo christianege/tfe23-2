@@ -29,12 +29,8 @@ auto main(int argc, char** argv) -> int
         return app.exit(e);
     }
 
-    fmt::println("Hello exercise number 3");
-    {
-        MyVector vec;
-    }
 
-    MyVector vec2(27);
+    MyVector vec2;
     fmt::println("Hello exercise number 3 after Vector");
 
     // Seed with a real random value, if available
@@ -46,7 +42,7 @@ auto main(int argc, char** argv) -> int
     for (int i = 0; i < counter; i++)
     {
         int rand = uniform_dist(e1);
-        fmt::println("The value of the random: {}", rand);
+        fmt::println("The value of the random: {} at index: {}", rand,i);
         vec2.push_back(rand);
     }
 

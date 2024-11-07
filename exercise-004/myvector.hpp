@@ -13,10 +13,13 @@ public:
     void push_back(int& elem);
     void push_back(int* elem);
     void resize(size_t new_size);
+    void reserve(size_t capacity);
+
 
 private:
     int* m_data;
     std::size_t m_size;
+    std::size_t m_capacity;
 };
 
 

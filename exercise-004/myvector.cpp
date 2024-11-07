@@ -5,14 +5,19 @@
 #include <algorithm>
 #include <iterator>
 
-MyVector::MyVector() : m_size(0){
+// Anonymous Namespace 
+namespace {
+    constexpr auto default_capacity{10};
+};
+
+MyVector::MyVector() : m_size(0), m_data(nullptr), m_capacity(default_capacity){
     fmt::println("[MyVector] welcome to the CTOR!");
-    m_data = nullptr;
+    m_data = new int[m_capacity];
 }
 
-MyVector::MyVector(size_t size) : m_size(size) {
+MyVector::MyVector(size_t size) : m_size(size), m_capacity(default_capacity) {
     fmt::println("[MyVector] welcome to the size CTOR!");
-    m_data = new int[size];
+    m_data = new int[m_capacity];
 }
 
 
@@ -21,7 +26,7 @@ MyVector::~MyVector() {
     if(m_data != nullptr) {
         delete [] m_data;
     }
-    
+    m_data = nullptr;
 }
 
 size_t MyVector::size() {
@@ -30,8 +35,13 @@ size_t MyVector::size() {
 }
 
 void MyVector::push_back(int& elem) {
-   resize(m_size+1);
-   m_data[m_size-1] = elem;
+    if(m_size == m_capacity) {
+        reserve(m_size+default_capacity);
+        m_capacity += default_capacity;
+    }
+    m_data[m_size] = elem;
+    m_size++;
+
 }
 
 void MyVector::push_back(int* elem) {
@@ -45,6 +55,28 @@ int& MyVector::at(size_t idx) {
     }
     return m_data[idx];
 }
+
+
+void MyVector::reserve(size_t capacity)  {
+    int* tmp = nullptr;
+    size_t to_copy = 0;
+    if(capacity == m_size) {
+        return;
+    } else if(capacity < m_size) {
+        return; // or throw an exception
+    } else {
+        tmp = new int[capacity];
+        to_copy = m_size;
+        for (int i = 0; i < capacity; i++){
+            int a;
+            tmp[i] = a;
+        }
+    }
+    std::copy(m_data,m_data+to_copy,tmp);
+    delete [] m_data;
+    m_data = tmp;
+}
+
 
 void MyVector::resize(size_t new_size) {
     int* tmp = nullptr;
