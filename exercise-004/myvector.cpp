@@ -7,8 +7,10 @@
 
 // Anonymous Namespace 
 namespace {
-    constexpr auto default_capacity{10};
+    constexpr auto default_capacity{100};
 };
+
+//static const unsigned int default_capacity = 1;
 
 MyVector::MyVector() : m_size(0), m_data(nullptr), m_capacity(default_capacity){
     fmt::println("[MyVector] welcome to the CTOR!");
@@ -36,7 +38,7 @@ size_t MyVector::size() {
 
 void MyVector::push_back(int& elem) {
     if(m_size == m_capacity) {
-        reserve(m_size+default_capacity);
+        reserve(m_capacity + default_capacity);
         m_capacity += default_capacity;
     }
     m_data[m_size] = elem;
@@ -67,10 +69,6 @@ void MyVector::reserve(size_t capacity)  {
     } else {
         tmp = new int[capacity];
         to_copy = m_size;
-        for (int i = 0; i < capacity; i++){
-            int a;
-            tmp[i] = a;
-        }
     }
     std::copy(m_data,m_data+to_copy,tmp);
     delete [] m_data;

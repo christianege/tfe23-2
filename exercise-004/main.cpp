@@ -39,17 +39,23 @@ auto main(int argc, char** argv) -> int
     // Choose a random mean between 1 and 100
     std::default_random_engine e1(r());
     std::uniform_int_distribution<int> uniform_dist(1, 100);
+    int rand = uniform_dist(e1);
+    // Start the stopwatch
+    auto start = std::chrono::system_clock::now();
     for (int i = 0; i < counter; i++)
     {
-        int rand = uniform_dist(e1);
-        fmt::println("The value of the random: {} at index: {}", rand,i);
+        
+        //fmt::println("The value of the random: {} at index: {}", rand,i);
         vec2.push_back(rand);
     }
+    auto end = std::chrono::system_clock::now();
+    fmt::println("The insertion took: {}",std::chrono::duration_cast<std::chrono::milliseconds>(end - start));
 
+/*
     for (int i = 0; i < vec2.size(); i++)
     {
         fmt::println("The element number {} contains: {}", i, vec2.at(i));
     }
-
+*/
     return 0; /* exit gracefully*/
 }
