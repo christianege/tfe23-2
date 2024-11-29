@@ -7,6 +7,7 @@
 
 #include "CLI/CLI.hpp"
 #include "config.h"
+#include "myvector.hpp"
 
 auto main(int argc, char** argv) -> int
 {
@@ -28,41 +29,31 @@ auto main(int argc, char** argv) -> int
         return app.exit(e);
     }
 
-    
+    fmt::println("Hello exercise number 3");
+    {
+        MyVector vec;
+    }
+
+    MyVector vec2(27);
+    fmt::println("Hello exercise number 3 after Vector");
+
     // Seed with a real random value, if available
     std::random_device r;
 
     // Choose a random mean between 1 and 100
     std::default_random_engine e1(r());
     std::uniform_int_distribution<int> uniform_dist(1, 100);
-    int rand_value = uniform_dist(e1);
-
-    std::vector<unsigned int> numbers;
-    auto start = std::chrono::system_clock::now();
     for (int i = 0; i < counter; i++)
     {
-        numbers.push_back(uniform_dist(e1));
+        int rand = uniform_dist(e1);
+        fmt::println("The value of the random: {}", rand);
+        vec2.push_back(rand);
     }
-    auto end = std::chrono::system_clock::now();
 
-    auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    fmt::println("The inserting took: {}", elapsed);
-    //fmt::println("The random vector: [ {} ]", fmt::join(numbers, ", "));
+    for (int i = 0; i < vec2.size(); i++)
+    {
+        fmt::println("The element number {} contains: {}", i, vec2.at(i));
+    }
 
-
-    fmt::println("Let's sort the numbers vector");
-    fmt::println("--------------------------------------------------------------------------");
-
-    start = std::chrono::system_clock::now();
-    std::sort(numbers.begin(), numbers.end(), std::less<int>());
-    end = std::chrono::system_clock::now();
-
-    fmt::println("The sorted numbers vector");
-    fmt::println("--------------------------------------------------------------------------");
-
-
-    //fmt::println("The sorted vector: [ {} ]", fmt::join(numbers, ", "));
-    elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-    fmt::println("The sorting took: {}", elapsed);
     return 0; /* exit gracefully*/
 }
